@@ -117,6 +117,16 @@ pipeline {
 			}
 		}
 
+		stage('Trivy Security Scan') {
+			steps {
+				container('trivy') {
+					sh '''
+						trivy fs --skip-dirs build/static/js .
+					'''
+				}
+			}
+		}
+
 		stage('Build Multi-Arch') {
 			steps {
 				container('buildah') {
